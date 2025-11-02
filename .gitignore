@@ -1,0 +1,148 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.conda/
+
+# Environment Variables
+backend/.env
+frontend/.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+postgresql_data/
+mysql_data/
+
+# Logs
+*.log
+logs/
+log/
+
+# Dependencies
+node_modules/
+.npm
+.yarn/
+.pnp.*
+
+# Backend specific
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/migrations/versions/*
+!backend/migrations/versions/.gitkeep
+
+# Frontend specific (if you add a frontend later)
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/out/
+
+# Testing
+.coverage
+.pytest_cache/
+.tox/
+htmlcov/
+.nyc_output
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Cloudinary cache
+.cloudinary/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Package files
+*.tar.gz
+*.zip
+*.rar
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Backup files
+*.backup
+*.bak
+*.orig
