@@ -865,58 +865,58 @@ const ExpenseTracker = () => {
 
   // Add the dashboard display section at the top of your main content:
   return (
-    <div className="min-h-screen bg-gray-50 relative">
-      {/* Navbar */}
-      <div className="bg-white shadow-sm border-b fixed top-0 left-100 w-full z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-8">
-          <div className="flex justify-between items-center py-4">
-            <h1 className="text-2xl font-bold text-white">Expense Tracker</h1>
-            <div className="flex space-x-3">
-              <button
-                onClick={() => {
-                  setIsEditing(false);
-                  setEditingExpense(null);
-                  setFormData({
-                    amount: '',
-                    currency: 'Taka',
-                    category: 'food',
-                    subcategory: '',
-                    merchant: '',
-                    description: '',
-                    date: new Date().toISOString().split('T')[0],
-                    payment_method: 'cash',
-                    is_recurring: false,
-                    recurrence_rule: '',
-                    tags: []
-                  });
-                  setIsFormVisible(!isFormVisible);
-                }}
-                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Add Expense
-              </button>
-            </div>
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Navbar - Sticky Header */}
+      <header className="bg-white shadow-sm border-b sticky top-0 left-0 w-full z-30">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <h1 className="text-2xl font-bold text-gray-900">Expense Tracker</h1>
+            <button
+              onClick={() => {
+                setIsEditing(false);
+                setEditingExpense(null);
+                setFormData({
+                  amount: '',
+                  currency: 'Taka',
+                  category: 'food',
+                  subcategory: '',
+                  merchant: '',
+                  description: '',
+                  date: new Date().toISOString().split('T')[0],
+                  payment_method: 'cash',
+                  is_recurring: false,
+                  recurrence_rule: '',
+                  tags: []
+                });
+                setIsFormVisible(!isFormVisible);
+              }}
+              className="inline-flex w-full sm:w-auto items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Expense
+            </button>
           </div>
           {/* Tabs */}
-          <div className="flex space-x-2 border-b border-gray-200">
+          <div className="mt-4 flex flex-wrap gap-2 border-b border-gray-200 pb-2">
             <button
-              className={`px-4 py-2 font-medium focus:outline-none transition-colors ${activeTab === 'recent' ? 'border-b-2 border-blue-600 text-blue-700 bg-blue-50' : 'text-gray-600 hover:bg-gray-100'}`}
+              className={`px-4 py-2 font-medium focus:outline-none transition-colors rounded-t-lg ${activeTab === 'recent' ? 'border-b-2 border-blue-600 text-blue-700 bg-blue-50' : 'text-gray-600 hover:bg-gray-100'}`}
               onClick={() => setActiveTab('recent')}
             >
               Recent Expenses
             </button>
             <button
-              className={`px-4 py-2 font-medium focus:outline-none transition-colors ${activeTab === 'summary' ? 'border-b-2 border-blue-600 text-blue-700 bg-blue-50' : 'text-gray-600 hover:bg-gray-100'}`}
+              className={`px-4 py-2 font-medium focus:outline-none transition-colors rounded-t-lg ${activeTab === 'summary' ? 'border-b-2 border-blue-600 text-blue-700 bg-blue-50' : 'text-gray-600 hover:bg-gray-100'}`}
               onClick={() => setActiveTab('summary')}
             >
               Summary
             </button>
           </div>
         </div>
-      </div>
-      <div className="max-w-6xl mx-auto px-2 sm:px-8 pt-36 pb-8 min-h-screen">
-        <div className="w-full">
+      </header>
+      
+      {/* Main Content - Scrollable */}
+      <main className="flex-1 w-full overflow-y-auto">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-6">
           {/* Show Add/Edit Form if visible */}
           {isFormVisible && (
             <div className="bg-white rounded-lg shadow-md p-6 mb-8">
@@ -1081,7 +1081,7 @@ const ExpenseTracker = () => {
                     )}
                   </div>
                 </div>
-                <div className="lg:col-span-3 flex justify-end space-x-3">
+                <div className="lg:col-span-3 flex flex-col gap-3 sm:flex-row sm:justify-end sm:space-x-3">
                   <button
                     onClick={() => {
                       setIsFormVisible(false);
@@ -1105,9 +1105,9 @@ const ExpenseTracker = () => {
           )}
 
           {/* Tab Content */}
-          <div className="w-full">
+          <div className="w-full space-y-6">
             {activeTab === 'summary' && (
-              <div className="mb-8 overflow-y-auto" style={{ maxHeight: '70vh' }}>
+              <section className="space-y-4">
                 <h2 className="text-2xl font-bold mb-3">Summary</h2>
                 {dashboardError && (
                   <div className="text-red-600 mb-2">{dashboardError}</div>
@@ -1244,17 +1244,16 @@ const ExpenseTracker = () => {
                     </div>
                   </div>
                 )}
-              </div>
+              </section>
             )}
             {activeTab === 'recent' && (
-              <div className="w-full flex justify-center">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-6xl">
+              <section className="w-full">
+                <div className="bg-white rounded-lg shadow-md overflow-hidden">
                   <div className="px-6 py-4 border-b border-gray-200">
                     <h2 className="text-xl font-semibold text-center">Recent Expenses</h2>
                   </div>
-                  <div className="overflow-y-auto" style={{ maxHeight: '780px' }}>
-                    <div className="overflow-x-auto">
-                      <table className="w-full min-w-[900px]">
+                  <div className="overflow-x-auto">
+                    <table className="w-full min-w-[720px]">
                         <thead className="bg-gray-50">
                           <tr>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
@@ -1307,19 +1306,19 @@ const ExpenseTracker = () => {
                         </tbody>
                       </table>
                     </div>
-                    {expenses.length === 0 && (
-                      <div className="text-center py-12">
-                        <p className="text-gray-500">No expenses here.</p>
-                        <p className="text-sm text-gray-400 mt-1">Add your first expense using the form above or voice input.</p>
-                      </div>
-                    )}
-                  </div>
+                  {expenses.length === 0 && (
+                    <div className="text-center py-12">
+                      <p className="text-gray-500">No expenses here.</p>
+                      <p className="text-sm text-gray-400 mt-1">Add your first expense using the form above or voice input.</p>
+                    </div>
+                  )}
                 </div>
-              </div>
+              </section>
             )}
           </div>
         </div>
-      </div>
+      </main>
+
       {/* Chatbot Button and Panel */}
       {!chatOpen && (
         <button
