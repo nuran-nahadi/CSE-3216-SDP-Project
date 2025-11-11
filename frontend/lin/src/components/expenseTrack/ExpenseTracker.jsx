@@ -6,6 +6,8 @@ import {
 } from 'lucide-react';
 import { Building, Edit, Trash } from 'lucide-react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
+import { eventBus } from '../../utils/eventBus';
+import { EXPENSE_CREATED, EXPENSE_UPDATED, EXPENSE_DELETED } from '../../utils/eventTypes';
 // ... existing code ...
 function getMonthYear(date) {
     const d = typeof date === 'string' ? new Date(date) : date;
@@ -619,12 +621,16 @@ const ExpenseTracker = () => {
       });
       if (response.ok) {
         setExpenses(prev => prev.filter(expense => expense.id !== expenseId));
+        // Publish event so other components know
+        eventBus.publish(EXPENSE_DELETED, { id: expenseId });
         alert('Expense deleted successfully!');
       } else {
         alert('Failed to delete expense. Please try again.');
       }
     } catch (error) {
       setExpenses(prev => prev.filter(expense => expense.id !== expenseId));
+      // Publish event even in demo mode
+      eventBus.publish(EXPENSE_DELETED, { id: expenseId });
       alert('Expense deleted successfully! (Demo mode)');
     } finally {
       setDeletingId(null);
@@ -694,9 +700,13 @@ const ExpenseTracker = () => {
           setExpenses(prev => prev.map(expense =>
             expense.id === editingExpense.id ? expenseData : expense
           ));
+          // Publish event so other components know
+          eventBus.publish(EXPENSE_UPDATED, expenseData);
           alert('Expense updated successfully!');
         } else {
           setExpenses(prev => [expenseData, ...prev]);
+          // Publish event so other components know
+          eventBus.publish(EXPENSE_CREATED, expenseData);
           alert('Expense added successfully!');
         }
         resetForm();

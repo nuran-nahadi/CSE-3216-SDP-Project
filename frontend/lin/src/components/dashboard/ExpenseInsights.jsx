@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useEventBus } from '../../hooks/useEventBus';
+import { EXPENSE_CREATED, EXPENSE_UPDATED, EXPENSE_DELETED } from '../../utils/eventTypes';
 
 const BASE_URL = 'http://127.0.0.1:8000';
 
@@ -7,11 +9,7 @@ function ExpenseInsights() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchInsights();
-  }, []);
-
-  const fetchInsights = async () => {
+  const fetchInsights = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(
@@ -74,7 +72,27 @@ function ExpenseInsights() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchInsights();
+  }, [fetchInsights]);
+
+  // Listen for expense events and refresh insights
+  useEventBus(EXPENSE_CREATED, () => {
+    console.log('💡 Expense created, refreshing insights...');
+    fetchInsights();
+  });
+
+  useEventBus(EXPENSE_UPDATED, () => {
+    console.log('💡 Expense updated, refreshing insights...');
+    fetchInsights();
+  });
+
+  useEventBus(EXPENSE_DELETED, () => {
+    console.log('💡 Expense deleted, refreshing insights...');
+    fetchInsights();
+  });
 
   const getMockInsights = () => {
     return [

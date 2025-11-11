@@ -107,6 +107,10 @@ frontend/dist/
 frontend/build/
 frontend/.next/
 frontend/out/
+frontend/docs/design-patterns-suggestions.md
+frontend/docs/observer-example.md
+frontend/docs/README-observer.md
+frontend/docs/observer-pattern.md
 
 # Testing
 .coverage
